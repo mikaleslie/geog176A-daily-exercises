@@ -1,0 +1,28 @@
+covid %>%
+  filter(date == max(date)) %>%  
+  select (date, county, cases) %>%
+  arrange(cases) %>%
+  top_n(5)
+  
+covid %>%
+  filter(date == max(date)) %>% 
+  group_by(state) %>%
+  summarize(total_cases = mean(cases), na.rm = TRUE) %>%
+  arrange(-total_cases) %>% 
+  top_n(5)
+
+covid %>%
+  filter(date == max(date)) %>% 
+  select (date, county, cases, deaths) %>%
+  mutate(death_rate = 100*(deaths/cases))%>%
+  arrange(-death_rate) %>%
+  top_n(5)
+  
+covid %>%
+  filter(date == max(date)) %>% 
+  group_by(state) %>%
+  summarize(total_cases = mean(cases), total_death = mean(deaths), na.rm = TRUE) %>%
+  mutate(death_rate = 100*(total_death/total_cases))%>%
+  arrange(-death_rate) %>%
+  top_n(5)
+  
